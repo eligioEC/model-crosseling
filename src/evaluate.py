@@ -13,7 +13,7 @@ def eval_model(filename):
     df = pd.read_csv(os.path.join("../data/processed",filename))
     print(filename, " cargado correctamente")
     # Leemos el modelo entranado para usarlo
-    package = "../models/best_model.pkl"
+    package = "../models/best_logreg_model.pkl"
     model = pickle.load(open(package,'rb'))
     print("modelo importado correctamente")
     # Predecimos sobre el set de datoa de validacion

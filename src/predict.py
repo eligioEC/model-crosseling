@@ -11,7 +11,7 @@ def score_model(filename,scores):
     print(filename, " cargado correctamente")
     print(df.info())
     # Leemos el modelo entrenado
-    package = "../models/best_model.pkl"
+    package = "../models/best_logreg_model.pkl"
     model = pickle.load(open(package,'rb'))
     print("Modelo importado correctamente")
     # Predecimos sobre el set de datos de scoring

@@ -28,7 +28,7 @@ import os
 import pandas as pd
 
 # Cargar data transformada y entrenar
-def read_and_train(filename):
+def read_and_train_xgboost(filename):
     df = pd.read_csv(os.path.join('../data/processed',filename))
 
     x_train = df.drop(['Compraron'],axis=1)
@@ -38,12 +38,28 @@ def read_and_train(filename):
     xgb_mod.fit(x_train,y_train)
     print("modelo entrenado")
     # Guardamos el modelo entrenado en formato pkl
-    package = '../models/best_model.pkl'
+    package = '../models/best_xgboost_model.pkl'
     pickle.dump(xgb_mod,open(package,'wb'))
     print("Modelo exportado correctamente en la carpeta models")
 
+def read_and_train_logreg(filename):
+    df = pd.read_csv(os.path.join('../data/processed',filename))
+
+    x_train = df.drop(['Compraron'],axis=1)
+    y_train = df[['Compraron']]
+    print(filename, " cargado correctamente")
+    #logreg = LogisticRegression(C=1.0, penalty='l2', solver='lbfgs', max_iter=100, random_state=42)
+    logreg = LogisticRegression(C=0.1, penalty='l2', solver='saga', max_iter=200, random_state=42)
+    logreg.fit(x_train,y_train)
+    print("modelo entrenado")
+    # Guardamos el modelo entrenado en formato pkl
+    package = '../models/best_logreg_model.pkl'
+    pickle.dump(logreg,open(package,'wb'))
+    print("Modelo exportado correctamente en la carpeta models")
+
 def main():
-    read_and_train('cros_train.csv')
+    #read_and_train('cros_train.csv')
+    read_and_train_logreg('cros_train.csv')
     print("Finalizo el entrenamiento del modelo")
 
 if __name__ == "__main__":
